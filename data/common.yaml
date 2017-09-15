@@ -1,0 +1,29 @@
+---
+lookup_options:
+  nrpe::plugins:
+    merge:
+      strategy: deep
+      merge_hash_arrays: true
+
+nrpe::nrpe_package_ensure: 'present'
+nrpe::nagios_plugins_package_ensure: 'present'
+nrpe::nrpe_config_owner: 'root'
+nrpe::nrpe_config_group: 'root'
+nrpe::nrpe_config_mode: '0644'
+nrpe::log_facility: 'daemon'
+nrpe::server_port: 5666
+nrpe::server_address_enable: false
+nrpe::server_address: '127.0.0.1'
+nrpe::allowed_hosts: ['127.0.0.1']
+nrpe::dont_blame_nrpe: '0'
+nrpe::allow_bash_command_substitution: '0'
+nrpe::command_prefix_enable: false
+nrpe::command_prefix: '/usr/bin/sudo'
+nrpe::debug: '0'
+nrpe::command_timeout: '60'
+nrpe::connection_timeout: '300'
+nrpe::allow_weak_random_seed: '0'
+nrpe::service_ensure: 'running'
+nrpe::service_enable: true
+nrpe::purge_plugins: false
+nrpe::hiera_merge_plugins: false

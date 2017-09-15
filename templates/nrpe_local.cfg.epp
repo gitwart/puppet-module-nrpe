@@ -1,0 +1,8 @@
+<%- | Hash $plugins,
+      String $libexecdir,
+| -%>
+# This file is being maintained by Puppet.
+# DO NOT EDIT
+<% $plugins.each |String $name, Hash $plugin_hash| { -%>
+command[<%= $name %>]=<%= $libexecdir %>/<%= $plugin_hash['plugin'] %><%= ($plugin_hash['args'] == undef) ? {true=>'', false=>' ', } %><%= $plugin_hash['args'] %>
+<% } -%>
