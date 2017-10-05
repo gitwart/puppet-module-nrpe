@@ -40,6 +40,7 @@ class nrpe (
   $purge_plugins,
   $hiera_merge_plugins,
   $nrpe_package_provider = undef,
+  String $sudo_command,
 ) {
 
   # Convert types
@@ -161,6 +162,7 @@ class nrpe (
 	content => epp('nrpe/nrpe_local.cfg.epp', {
 	  'plugins' => $plugin_hash,
 	  'libexecdir' => $libexecdir,
+	  'sudo_command' => $sudo_command,
 	}),
     }
   }
