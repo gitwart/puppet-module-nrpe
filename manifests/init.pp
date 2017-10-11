@@ -41,6 +41,7 @@ class nrpe (
   $hiera_merge_plugins,
   $nrpe_package_provider = undef,
   String $sudo_command,
+  Boolean $allow_sudo,
 ) {
 
   # Convert types
@@ -151,6 +152,19 @@ class nrpe (
     name      => $service_name,
     enable    => $service_enable_bool,
     subscribe => File['nrpe_config'],
+  }
+
+  if $allow_sudo {
+      file { '/etc/sudoers.d/nagios':
+	ensure  => 'file',
+	owner   => 'root',
+	group   => 'root',
+	mode    => '0660',
+	content => epp('nrpe/sudoers.epp', {
+	    'user' => $nrpe_user,
+	    'libexecdir' => $libexecdir,
+	}),
+      }
   }
 
   $nrpe::plugins.each |String $group, Hash $plugin_hash| {
