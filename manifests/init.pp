@@ -41,7 +41,7 @@ class nrpe (
 		       Optional[use_sudo] => Boolean}]]] $plugins,
   Hash[String, Hash[String, Struct[{Optional[plugin] => String,
                        Optional[args] => String,
-		       Optional[use_sudo] => Boolean}]]] $plugin_overrides = {},
+		       Optional[use_sudo] => Boolean}]]] $plugin_overrides,
   $purge_plugins,
   $hiera_merge_plugins,
   $nrpe_package_provider = undef,

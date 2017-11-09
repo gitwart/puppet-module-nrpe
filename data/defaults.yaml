@@ -28,3 +28,5 @@ nrpe::service_enable: true
 nrpe::purge_plugins: false
 nrpe::hiera_merge_plugins: false
 nrpe::allow_sudo: false
+nrpe::plugins: {}
+nrpe::plugin_overrides: {}
