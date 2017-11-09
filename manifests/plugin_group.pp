@@ -29,7 +29,7 @@ define nrpe::plugin_group (
     }),
     owner   => $nrpe::nrpe_config_owner,
     group   => $nrpe::nrpe_config_group,
-    mode    => $nrpe::nrpe_mode,
+    mode    => $nrpe::nrpe_config_mode,
     require => File['nrpe_config_dot_d'],
     notify  => Service['nrpe_service'],
   }

@@ -177,7 +177,7 @@ class nrpe (
 	ensure => file,
 	owner => $nrpe_config_owner,
 	group => $nrpe_config_group,
-	mode => $nrpe_mode,
+	mode => $nrpe_config_mode,
 	content => epp('nrpe/nrpe_local.cfg.epp', {
 	  'plugins' => deep_merge($plugin_hash, $plugin_overrides[$group]),
 	  'libexecdir' => $libexecdir,
