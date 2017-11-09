@@ -8,7 +8,7 @@
 define nrpe::plugin_group (
   Enum['present', 'absent'] $ensure = 'present',
   Hash[String, Struct[{plugin => String,
-                       args => String,
+                       Optional[args] => String,
 		       Optional[use_sudo] => Boolean}]] $plugins,
 ) {
   if $ensure == 'present' {
