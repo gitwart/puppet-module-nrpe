@@ -3,7 +3,7 @@ version: 5
 defaults:
   datadir: data
   data_hash: yaml_data
-hierarchy:
+default_hierarchy:
   - name: "Full Version"
     path: "%{facts.os.name}-%{facts.os.release.full}.yaml"
 
@@ -20,4 +20,4 @@ hierarchy:
     path: "%{facts.os.family}.yaml"
 
   - name: "Common set of defaults"
-    path: "common.yaml"
+    path: "defaults.yaml"
