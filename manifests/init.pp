@@ -164,7 +164,7 @@ class nrpe (
 	ensure  => 'file',
 	owner   => 'root',
 	group   => 'root',
-	mode    => '0660',
+	mode    => '0440',
 	content => epp('nrpe/sudoers.epp', {
 	    'user' => $nrpe_user,
 	    'libexecdir' => $libexecdir,
