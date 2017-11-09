@@ -10,11 +10,6 @@ define nrpe::plugin_group (
   Hash[String, Struct[{plugin => String,
                        args => String,
 		       Optional[use_sudo] => Boolean}]] $plugins,
-
-  $args           = 'UNSET',
-  $libexecdir     = 'USE_DEFAULTS',
-  $plugin         = 'USE_DEFAULTS',
-  $command_prefix = 'UNSET',
 ) {
   if $ensure == 'present' {
     $plugin_ensure = 'file'
