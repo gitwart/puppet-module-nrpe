@@ -39,6 +39,9 @@ class nrpe (
   Hash[String, Hash[String, Struct[{plugin => String,
                        Optional[args] => String,
 		       Optional[use_sudo] => Boolean}]]] $plugins,
+  Hash[String, Hash[String, Struct[{Optional[plugin] => String,
+                       Optional[args] => String,
+		       Optional[use_sudo] => Boolean}]]] $plugin_overrides = {},
   $purge_plugins,
   $hiera_merge_plugins,
   $nrpe_package_provider = undef,
@@ -176,7 +179,7 @@ class nrpe (
 	group => $nrpe_config_group,
 	mode => $nrpe_mode,
 	content => epp('nrpe/nrpe_local.cfg.epp', {
-	  'plugins' => $plugin_hash,
+	  'plugins' => deep_merge($plugin_hash, $plugin_overrides[$group]),
 	  'libexecdir' => $libexecdir,
 	  'sudo_command' => $sudo_command,
 	}),

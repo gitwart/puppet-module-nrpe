@@ -23,7 +23,7 @@ define nrpe::plugin_group (
     ensure  => $plugin_ensure,
     path    => "${nrpe::include_dir}/${name}.cfg",
     content => epp('nrpe/nrpe_local.cfg.epp', {
-	'plugins' => $plugins,
+	'plugins' => deep_merge($plugins, $nrpe::plugin_overrides[$name]),
 	'libexecdir' => $nrpe::libexecdir,
 	'sudo_command' => $nrpe::sudo_command,
     }),
