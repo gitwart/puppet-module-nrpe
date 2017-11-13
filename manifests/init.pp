@@ -170,6 +170,16 @@ class nrpe (
 	    'libexecdir' => $libexecdir,
 	}),
       }
+
+      selboolean {'nagios_run_sudo':
+	persistent => true,
+	value => on,
+      }
+  } else {
+      selboolean {'nagios_run_sudo':
+	persistent => true,
+	value => off,
+      }
   }
 
   $nrpe::plugins.each |String $group, Hash $plugin_hash| {
