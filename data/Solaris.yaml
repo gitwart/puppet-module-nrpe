@@ -1,14 +1,12 @@
 ---
-service_name: 'nrpe'
-nrpe_package: 'nrpe'
-nrpe_package_adminfile: undef
-nrpe_package_source: undef
-nagios_plugins_package: 'nagios-plugins'
-nagios_plugins_package_adminfile: undef
-nagios_plugins_package_source: undef
-nrpe_config: '/usr/local/nagios/etc/nrpe.cfg'
-libexecdir: '/usr/local/nagios/libexec'
-pid_file: '/var/run/nagios/nrpe.pid'
-nrpe_user: 'nagios'
-nrpe_group: 'nagios'
-include_dir: '/usr/local/nagios/etc/nrpe.d'
+nrpe::service_name: 'svc:/network/cswnrpe:default'
+nrpe::nrpe_package: 'CSWnrpe'
+nrpe::nrpe_package_provider: 'pkgutil'
+nrpe::nagios_plugins_package: 'CSWnagios-plugins'
+nrpe::nrpe_config: '/etc/opt/csw/nrpe.cfg'
+nrpe::libexecdir: '/opt/csw/libexec'
+nrpe::pid_file: '/var/run/nrpe.pid'
+nrpe::nrpe_user: 'nagios'
+nrpe::nrpe_group: 'nagios'
+nrpe::include_dir: '/etc/opt/csw/nrpe.d'
+nrpe::sudo_command: '/usr/bin/sudo'
