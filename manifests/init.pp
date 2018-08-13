@@ -171,14 +171,18 @@ class nrpe (
 	}),
       }
 
-      selboolean {'nagios_run_sudo':
-	persistent => true,
-	value => on,
+      if $facts['selinux'] {
+	  selboolean {'nagios_run_sudo':
+	    persistent => true,
+	    value => on,
+	  }
       }
   } else {
-      selboolean {'nagios_run_sudo':
-	persistent => true,
-	value => off,
+      if $facts['selinux'] {
+	  selboolean {'nagios_run_sudo':
+	    persistent => true,
+	    value => off,
+	  }
       }
   }
 
