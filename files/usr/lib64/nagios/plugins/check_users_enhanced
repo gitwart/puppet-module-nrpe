@@ -67,7 +67,7 @@ total_users=$(($remote_users + $local_users))
 
 # Determine the names of users
 
-user_names=$(who | awk '{if(NR>2)print $1}' | sort -u)
+user_names=$(who | cut -d' ' -f1  | sort -u)
 
 # output nrpe output
 if [ $total_users -ge $critical ]
