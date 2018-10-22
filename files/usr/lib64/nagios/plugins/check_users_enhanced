@@ -1,0 +1,89 @@
+#!/bin/bash
+
+# Parse inputs + usage information
+STATE_OK=0
+STATE_WARNING=1
+STATE_CRITICAL=2
+STATE_UNKNOWN=3
+
+#initialize variables to their defaults
+warn=5
+critical=10
+
+
+while getopts "w:c:h?:" opt; do
+   case "$opt" in
+      h|\?)
+         echo "argument options are:"
+         echo " -w : amount of users logged in at which a warning message should be thrown"
+         echo " -c : amount of users logged in at which a critical message should be thrown"
+         echo " -h : display this help message"         
+         exit $STATE_UNKNOWN
+         ;;
+      w)
+         case $OPTARG in
+            ''|*[!0-9]*) echo "UNKNOWN: w must be a number"
+                   exit $STATE_UNKNOWN;;
+            *) warn=$OPTARG;;
+         esac
+         ;;
+      c)
+         case $OPTARG in
+            ''|*[!0-9]*) echo "UNKNOWN: c must be a number"
+                   exit $STATE_UNKNOWN
+                   ;;
+            *) critical=$OPTARG;;
+         esac
+         ;;  
+   esac
+done
+
+# Error Checking
+if [ "$warn" -gt "$critical" ] 
+then
+   echo "UNKNOWN: w must be less than c"
+   exit $STATE_UNKNOWN
+fi
+
+if [ "$warn" -lt 0 ] 
+then
+   echo "UNKNOWN: w must be greater than or equal to 0"
+   exit $STATE_UNKNOWN
+fi
+
+if [ "$critical" -lt 0 ] 
+then
+   echo "UNKNOWN: c must be greater than or equal to 0"
+   exit $STATE_UNKNOWN
+fi
+
+# Determine how many local users there are
+local_users=$(who | grep "(:0)" | awk '!seen[$1]++' | wc -l)
+
+# Determine how many remote users are logged in
+remote_users=$(who | awk '!/\(:0\)/ {print}' | wc -l)
+
+total_users=$(($remote_users + $local_users))
+
+# Determine the names of users
+
+user_names=$(who | awk '{if(NR>2)print $1}' | sort -u)
+
+# output nrpe output
+if [ $total_users -ge $critical ]
+then
+    echo "CRITICAL: $total_users users - $local_users local & $remote_users remote; Users Logged In: $user_names"
+    exit $STATE_CRITICAL
+elif [ $total_users -ge $warn ]
+then
+    echo "WARNING: $total_users users - $local_users local & $remote_users remote; Users Logged In: $user_names"
+    exit $STATE_WARNING
+elif [ $total_users -lt $warn ]
+then
+    echo "OK: $total_users users - $local_users local & $remote_users remote; Users Logged In: $user_names"
+    exit $STATE_OK
+else
+    echo "UNKNOWN: Unable to determine number of users"
+    exit $STATE_UNKNOWN
+fi
+
