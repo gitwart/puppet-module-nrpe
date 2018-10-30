@@ -61,7 +61,7 @@ fi
 local_users=$(who | grep "(:0)" | awk '!seen[$1]++' | wc -l)
 
 # Determine how many remote users are logged in
-remote_users=$(who | awk '!/\(:0\)/ {print}' | wc -l)
+remote_users=$(who | awk '!/\(:0\)/ {print}' | awk '!/\(:0.0\)/ {print}' |  wc -l)
 
 total_users=$(($remote_users + $local_users))
 
