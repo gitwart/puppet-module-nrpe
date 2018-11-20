@@ -159,16 +159,6 @@ class nrpe (
     subscribe => File['nrpe_config'],
   }
 
-  if $facts['os']['family'] == 'RedHat' {
-    file {'/usr/lib64/nagios/plugins/check_users_enhanced':
-      ensure => 'file',
-      owner => 'root',
-      group => 'root',
-      mode => '755',
-      source => ["puppet://puppet/modules/nrpe/usr/lib64/nagios/plugins/check_users_enhanced"],
-    }
-  }
-
   if $allow_sudo {
       file { '/etc/sudoers.d/nagios':
 	ensure  => 'file',
