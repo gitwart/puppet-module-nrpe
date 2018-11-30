@@ -130,6 +130,13 @@ class nrpe (
     before    => Service['nrpe_service'],
   }
 
+  file {$libexecdir:
+    ensure => 'directory',
+    owner => 'root',
+    group => 'root',
+    mode => '0775',
+  }
+
   file { 'nrpe_config':
     ensure  => file,
     content => template('nrpe/nrpe.cfg.erb'),
