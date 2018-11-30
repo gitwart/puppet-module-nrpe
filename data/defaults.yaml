@@ -30,3 +30,4 @@ nrpe::hiera_merge_plugins: false
 nrpe::allow_sudo: false
 nrpe::plugins: {}
 nrpe::plugin_overrides: {}
+nrpe::libexecdir_owner: 'root'

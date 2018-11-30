@@ -16,6 +16,7 @@ class nrpe (
   String $nrpe_config_group,
   String $nrpe_config_mode,
   String $libexecdir,
+  String $libexecdir_owner,
   String $log_facility,
   String $pid_file,
   Integer $server_port,
@@ -132,8 +133,8 @@ class nrpe (
 
   file {$libexecdir:
     ensure => 'directory',
-    owner => 'root',
-    group => 'root',
+    owner => $libexecdir_owner,
+    group => $libexecdir_owner,
     mode => '0775',
   }
 
