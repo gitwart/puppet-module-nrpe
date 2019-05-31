@@ -19,22 +19,22 @@ class nrpe (
   String $libexecdir_owner,
   String $log_facility,
   String $pid_file,
-  Integer $server_port,
-  $server_address_enable,
-  $server_address,
-  $nrpe_user,
-  $nrpe_group,
-  $allowed_hosts,
-  $dont_blame_nrpe,
-  $allow_bash_command_substitution,
-  $command_prefix_enable,
+  Integer[0, 65535] $server_port,
+  Boolean $server_address_enable,
+  String $server_address,
+  String $nrpe_user,
+  String $nrpe_group,
+  Array[String] $allowed_hosts,
+  Boolean $dont_blame_nrpe,
+  Boolean $allow_bash_command_substitution,
+  Boolean $command_prefix_enable,
   String $command_prefix,
-  $debug,
-  $command_timeout,
-  $connection_timeout,
-  $allow_weak_random_seed,
+  Boolean $debug,
+  Integer[1] $command_timeout,
+  Integer[1] $connection_timeout,
+  Boolean $allow_weak_random_seed,
   String $include_dir,
-  $service_ensure,
+  Enum['running', 'stopped'] $service_ensure,
   String $service_name,
   $service_enable,
   Hash[String, Hash[String, Struct[{plugin => String,
@@ -81,38 +81,7 @@ class nrpe (
     $hiera_merge_plugins_bool = $hiera_merge_plugins
   }
 
-  # Validate params
-  validate_re($nrpe_config_mode, '^\d{4}$',
-    "nrpe::nrpe_config_mode must be a four digit octal mode. Detected value is <${nrpe_config_mode}>.")
-  validate_absolute_path($nrpe_config)
-  validate_absolute_path($libexecdir)
-  if $pid_file != 'absent' {
-    validate_absolute_path($pid_file)
-  }
-
-  if $server_port < 0 or $server_port > 65535 {
-    fail("nrpe::server_port must be a valid port number between 0 and 65535, inclusive. Detected value is <${server_port}>.")
-  }
-  validate_array($allowed_hosts)
-  validate_re($dont_blame_nrpe, '^[01]{1}$',
-    "nrpe::dont_blame_nrpe must be 0 or 1. Detected value is <${dont_blame_nrpe}>.")
-  validate_re($allow_bash_command_substitution, '^[01]{1}$',
-    "nrpe::allow_bash_command_substitution must be 0 or 1. Detected value is <${allow_bash_command_substitution}>.")
-  validate_absolute_path($command_prefix)
-  validate_re($debug, '^[01]{1}$',
-    "nrpe::debug must be 0 or 1. Detected value is <${debug}>.")
-  validate_re($command_timeout, '^\d+$',
-    "nrpe::command_timeout must be a postive integer. Detected value is <${command_timeout}>.")
-  validate_re($connection_timeout, '^\d+$',
-    "nrpe::connection_timeout must be a postive integer. Detected value is <${connection_timeout}>.")
-  validate_re($allow_weak_random_seed, '^[01]{1}$',
-    "nrpe::allow_weak_random_seed must be 0 or 1. Detected value is <${allow_weak_random_seed}>.")
-  validate_absolute_path($include_dir)
-  validate_re($service_ensure, '^(running|stopped)$',
-    "nrpe::service_ensure must be \'running\' or \'stopped\'. Detected value is <${service_ensure}>.")
-
   if $nrpe_package_provider {
-    validate_string($nrpe_package_provider)
     Package {
       provider => $nrpe_package_provider,
     }
@@ -140,7 +109,25 @@ class nrpe (
 
   file { 'nrpe_config':
     ensure  => file,
-    content => template('nrpe/nrpe.cfg.erb'),
+    content => epp('nrpe/nrpe.cfg.epp', {
+	log_facility => $log_facility,
+	pid_file => $pid_file,
+	server_port => $server_port,
+	server_address_enable => $server_address_enable,
+	server_address => $server_address,
+	nrpe_user => $nrpe_user,
+	nrpe_group => $nrpe_group,
+	allowed_hosts => $allowed_hosts,
+	dont_blame_nrpe => $dont_blame_nrpe,
+	allow_bash_command_substitution => $allow_bash_command_substitution,
+	command_prefix_enable => $command_prefix_enable,
+	command_prefix => $command_prefix,
+	debug => $debug,
+	command_timeout => $command_timeout,
+	connection_timeout => $connection_timeout,
+	allow_weak_random_seed => $allow_weak_random_seed,
+	include_dir => $include_dir,
+    }),
     path    => $nrpe_config,
     owner   => $nrpe_config_owner,
     group   => $nrpe_config_group,
