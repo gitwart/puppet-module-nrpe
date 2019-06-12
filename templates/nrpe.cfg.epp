@@ -15,7 +15,7 @@
     Integer[1] $connection_timeout,
     Boolean $allow_weak_random_seed,
     String $include_dir,
-%>
+| %>
 # This file is being maintained by Puppet.
 # DO NOT EDIT
 #
