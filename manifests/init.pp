@@ -36,51 +36,21 @@ class nrpe (
   String $include_dir,
   Enum['running', 'stopped'] $service_ensure,
   String $service_name,
-  $service_enable,
+  Boolean $service_enable,
   Hash[String, Hash[String, Struct[{plugin => String,
                        Optional[args] => String,
 		       Optional[use_sudo] => Boolean}]]] $plugins,
   Hash[String, Hash[String, Struct[{Optional[plugin] => String,
                        Optional[args] => String,
 		       Optional[use_sudo] => Boolean}]]] $plugin_overrides,
-  $purge_plugins,
-  $hiera_merge_plugins,
-  $nrpe_package_provider = undef,
+  Boolean $purge_plugins,
+  Boolean $hiera_merge_plugins,
+  String $nrpe_package_provider = undef,
   String $sudo_command,
   Boolean $allow_sudo,
 ) {
 
   # Convert types
-  if is_string($server_address_enable) {
-    $server_address_enable_bool = str2bool($server_address_enable)
-  } else {
-    $server_address_enable_bool = $server_address_enable
-  }
-
-  if is_string($command_prefix_enable) {
-    $command_prefix_enable_bool = str2bool($command_prefix_enable)
-  } else {
-    $command_prefix_enable_bool = $command_prefix_enable
-  }
-
-  if is_string($service_enable) {
-    $service_enable_bool = str2bool($service_enable)
-  } else {
-    $service_enable_bool = $service_enable
-  }
-
-  if is_string($purge_plugins) {
-    $purge_plugins_bool = str2bool($purge_plugins)
-  } else {
-    $purge_plugins_bool = $purge_plugins
-  }
-
-  if is_string($hiera_merge_plugins) {
-    $hiera_merge_plugins_bool = str2bool($hiera_merge_plugins)
-  } else {
-    $hiera_merge_plugins_bool = $hiera_merge_plugins
-  }
-
   if $nrpe_package_provider {
     Package {
       provider => $nrpe_package_provider,
