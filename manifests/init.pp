@@ -111,7 +111,7 @@ class nrpe (
     owner   => $nrpe_config_owner,
     group   => $nrpe_config_group,
     mode    => $nrpe_config_mode,
-    purge   => $purge_plugins_bool,
+    purge   => $purge_plugins,
     recurse => true,
     require => Package[$nrpe_package],
     notify  => Service['nrpe_service'],
@@ -120,7 +120,7 @@ class nrpe (
   service { 'nrpe_service':
     ensure    => $service_ensure,
     name      => $service_name,
-    enable    => $service_enable_bool,
+    enable    => $service_enable,
     subscribe => File['nrpe_config'],
   }
 
