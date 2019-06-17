@@ -45,7 +45,7 @@ class nrpe (
 		       Optional[use_sudo] => Boolean}]]] $plugin_overrides,
   Boolean $purge_plugins,
   Boolean $hiera_merge_plugins,
-  String $nrpe_package_provider = undef,
+  Optional[String] $nrpe_package_provider = undef,
   String $sudo_command,
   Boolean $allow_sudo,
 ) {
