@@ -1,0 +1,4 @@
+---
+nrpe::libexecdir: '/usr/lib64/nagios/plugins'
+nrpe::libexecdir_owner: 'root'
+nrpe::sudo_command: '/usr/bin/sudo'

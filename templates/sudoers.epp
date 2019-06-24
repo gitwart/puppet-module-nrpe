@@ -1,0 +1,6 @@
+<%- |
+    String $user,
+    String $libexecdir,
+| -%>
+Defaults:<%= $user %> !requiretty
+<%= $user %> ALL=(ALL) NOPASSWD: <%= $libexecdir %>/

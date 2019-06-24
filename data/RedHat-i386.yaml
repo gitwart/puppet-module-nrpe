@@ -1,0 +1,3 @@
+---
+nrpe::libexecdir: '/usr/lib/nagios/plugins'
+nrpe::libexecdir_owner: 'root'

@@ -163,7 +163,11 @@ describe 'nrpe' do
   context 'with default options on osfamily Debian with unsupported lsbdistid' do
     let(:facts) do
       { :osfamily          => 'Debian',
+<<<<<<< HEAD
         :lsbdistid         => 'NotSupported',
+=======
+        :lsbdistid         => 'NotDebianorUbuntu',
+>>>>>>> origin/master
         :lsbmajdistrelease => '6',
       }
     end
@@ -171,7 +175,11 @@ describe 'nrpe' do
     it 'should fail' do
       expect {
         should contain_class('nrpe')
+<<<<<<< HEAD
       }.to raise_error(Puppet::Error,/nrpe supports lsbdistid's Debian, Raspbian and Ubuntu in the osfamily Debian\. Detected lsbdistid is <NotSupported>\./)
+=======
+      }.to raise_error(Puppet::Error,/nrpe supports lsbdistid's Debian and Ubuntu in the osfamily Debian\. Detected lsbdistid is <NotDebianorUbuntu>\./)
+>>>>>>> origin/master
     end
   end
 
@@ -254,6 +262,7 @@ describe 'nrpe' do
     }
   end
 
+<<<<<<< HEAD
   context 'with default options on Debian 8' do
     let(:facts) do
       { :osfamily          => 'Debian',
@@ -333,6 +342,8 @@ describe 'nrpe' do
     }
   end
 
+=======
+>>>>>>> origin/master
   context 'with default options on Ubuntu' do
     let(:facts) do
       { :osfamily          => 'Debian',

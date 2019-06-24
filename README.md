@@ -11,14 +11,22 @@ and their associated parameters.
 
 # Compatibility
 ---------------
+<<<<<<< HEAD
 This module supports Puppet v3 (with and without the future parser), v4,
 v5 and v6 with Ruby versions 1.8.7, 1.9.3, 2.0.0, 2.1.9, 2.4.1 and 2.5.1.
 See `.travis.yml` for an exact matrix.
+=======
+This module supports Puppet v3 (with and without the future parser) and v4 with
+Ruby versions 1.8.7, 1.9.3, 2.0.0, 2.1.0 and 2.3.1.
+>>>>>>> origin/master
 
 It is tested on the following platforms.
 
 * Debian 6
+<<<<<<< HEAD
 * Debian 8
+=======
+>>>>>>> origin/master
 * EL 6
 * Suse 11
 * Solaris 10
